@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Set;
 
 
 @Controller
@@ -32,20 +33,4 @@ public class LoginController {
         return "login";
     }
 
-    @GetMapping("/registration")
-    public String create(ModelMap modelMap) {
-        modelMap.addAttribute("user", new User());
-        Role defaultRole = roleService.findById(2L);
-        modelMap.addAttribute("defaultRole", defaultRole);
-        return "registration";
-    }
-
-    @PostMapping("/registration")
-    public String addUser(@ModelAttribute(value = "user") User user) {
-        Collection<Role> defaultRole = Collections.singleton(roleService.findById(2L));
-        user.setRoles(defaultRole);
-        userService.save(user);
-
-        return "redirect:/login";
-    }
 }
